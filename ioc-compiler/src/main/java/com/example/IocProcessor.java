@@ -93,8 +93,6 @@ public class IocProcessor extends AbstractProcessor {
         annotationTypes.add(BindView.class.getCanonicalName());
         return annotationTypes;
     }
-
-
     /**
      *  指定使用的java版本，一般默认支持返回最新
      * @return
@@ -105,8 +103,6 @@ public class IocProcessor extends AbstractProcessor {
     }
 
     private Map<String, ProxyInfo> mProxyMap = new HashMap<>();
-
-
     /**
      * 相当于main 函数，处理扫描，评估和处理注解的代码以及生成java文件
      * @param set
@@ -163,11 +159,7 @@ public class IocProcessor extends AbstractProcessor {
     }
 
     /**
-     * 检查注解是否合法
-     *
-     * @param annotatedElement
-     * @param clazz
-     * @return
+     * 检查查找的元素是否合法
      */
     private boolean checkAnnotationValid(Element annotatedElement, Class clazz) {
         if (annotatedElement.getKind() != ElementKind.FIELD) {
@@ -178,16 +170,14 @@ public class IocProcessor extends AbstractProcessor {
             error(annotatedElement, "%s() must can not be private.", annotatedElement.getSimpleName());
             return false;
         }
-
         return true;
     }
 
+    // 展示错误信息
     private void error(Element element, String message, Object... args) {
         if (args.length > 0) {
             message = String.format(message, args);
         }
         mMessager.printMessage(Diagnostic.Kind.NOTE, message, element);
     }
-
-
 }

@@ -19,7 +19,6 @@ public class ViewFinder {
     public static void inject(Activity activity) {
         inject(activity, activity, PROVIDER_ACTIVITY);
     }
-
     /**
      * 从View 中查找
      * @param host
@@ -29,16 +28,15 @@ public class ViewFinder {
         // for fragment
         inject(host, view, PROVIDER_VIEW);
     }
-
-
-    public static void inject(Object host, Object source, Provider provider) {
+    // 注入的最终调用
+    private static void inject(Object host, Object source, Provider provider) {
         Class<?> clazz = host.getClass();
-        String proxyClassFullName = clazz.getName()+"$$Finder";
+        String proxyClassFullName = clazz.getName()+"$$Finder";// 根据传入的对象获取辅助类的全路径名
         Class<?> proxyClazz = null;
         try {
-            proxyClazz = Class.forName(proxyClassFullName);
-            Finder viewInjector = (Finder) proxyClazz.newInstance();
-            viewInjector.inject(host, source,provider);
+            proxyClazz = Class.forName(proxyClassFullName);// 获取辅助类的class
+            Finder viewInjector = (Finder) proxyClazz.newInstance(); // 生成辅助类的实例
+            viewInjector.inject(host, source, provider); // 调用辅助类的inject()方法
         }catch (Exception e) {
             e.printStackTrace();
         }

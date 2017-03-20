@@ -5,8 +5,5 @@ package com.mahao.ioc_api;
  */
 
 public interface Finder<T> {
-
-
     void inject(T host, Object source, Provider provider);
-
 }

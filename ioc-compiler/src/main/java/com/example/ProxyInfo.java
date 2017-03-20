@@ -32,27 +32,23 @@ public class ProxyInfo {
         packageName = packageElement.getQualifiedName().toString();
         proxyClassName = ClassValidator.getClassName(classElement, packageName) + "$$" + PROXY;
     }
-
-
+    // 生成java 代码
     public String generateJavaCode() {
         StringBuilder builder = new StringBuilder();
         builder.append("// Generated code. Do not modify!\n");
         builder.append("package ").append(packageName).append(";\n\n");
-        builder.append("import com.example.*;\n");
         builder.append("import com.mahao.ioc_api.*;\n");
         builder.append('\n');
         builder.append("public class ").append(proxyClassName).append(" implements " + ProxyInfo.PROXY + "<" + typeElement.getQualifiedName() + ">");
         builder.append(" {\n");
-        // 添加方法
+        // 添加inject()方法
         generateMethods(builder);
         builder.append('\n');
-
         builder.append("}\n");
         return builder.toString();
-
     }
 
-
+    // 生成注入的方法
     private void generateMethods(StringBuilder builder) {
         builder.append("@Override\n ");
         builder.append("public void inject(" + typeElement.getQualifiedName() + " host, Object source, Provider provider) {\n");
@@ -73,7 +69,6 @@ public class ProxyInfo {
     public TypeElement getTypeElement() {
         return typeElement;
     }
-
 
 }
 
